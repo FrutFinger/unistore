@@ -1,2 +1,2 @@
-release: python manage.py migrate --verbosity=2 && python manage.py collectstatic --noinput || echo "Setup failed, continuing..."
+release: python manage.py setup_db
 web: gunicorn config.wsgi 
