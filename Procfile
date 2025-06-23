@@ -1,1 +1,1 @@
-web: python manage.py migrate --noinput && gunicorn config.wsgi 
+web: chmod +x entrypoint.sh && ./entrypoint.sh 
