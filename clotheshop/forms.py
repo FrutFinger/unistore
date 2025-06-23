@@ -174,7 +174,7 @@ class OrderForm(forms.ModelForm):
             if now.hour >= 19 and now.minute >= 30:
                 return []  # Магазин закрыт
             
-            # Начало и конец рабочего дня
+            # Начало рабочего дня
             start_hour = 9
             end_hour = 19
             
@@ -185,21 +185,11 @@ class OrderForm(forms.ModelForm):
             # Если сейчас между 9:00 и 19:00, показываем только будущие слоты
             available_slots = []
             current_hour = now.hour
-            current_minute = now.minute
             
             # Если сейчас 16:50, показываем слоты 17:00-18:00, 18:00-19:00
             # Если сейчас 17:30, показываем только 18:00-19:00
-            for h in range(start_hour, end_hour):
-                # Если это текущий час, проверяем минуты
-                if h == current_hour:
-                    # Если прошло больше 30 минут текущего часа, не показываем этот слот
-                    if current_minute >= 30:
-                        continue
-                    # Если прошло меньше 30 минут, показываем текущий слот
-                    available_slots.append((f"{h}:00 - {h+1}:00", f"{h}:00 - {h+1}:00"))
-                elif h > current_hour:
-                    # Показываем все будущие часы
-                    available_slots.append((f"{h}:00 - {h+1}:00", f"{h}:00 - {h+1}:00"))
+            for h in range(current_hour + 1, end_hour):
+                available_slots.append((f"{h}:00 - {h+1}:00", f"{h}:00 - {h+1}:00"))
             
             return available_slots
             

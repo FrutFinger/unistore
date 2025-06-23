@@ -40,7 +40,7 @@
     <p class="cart-count">Товаров: {{ total_quantity }}</p>
     <p class="cart-total">Итого: {{ total_price }} ₽</p>
     {% if cart_items %}
-      <button id="open-order-modal" class="checkout-button">Оформить заказ</button>
+    <button id="open-order-modal" class="checkout-button">Оформить заказ</button>
     {% else %}
       <button class="checkout-button" disabled style="background-color: #ccc; cursor: not-allowed;">Корзина пуста</button>
     {% endif %}

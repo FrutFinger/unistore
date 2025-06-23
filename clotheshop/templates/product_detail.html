@@ -26,25 +26,25 @@
       
       {% if product.has_sizes %}
         <!-- Для товаров с размерами -->
-        <div class="size-selector">
-          {% for size in sizes %}
-            <button type="button" class="size-btn" data-size="{{ size.size }}" data-quantity="{{ size.quantity }}">
-              {{ size.size }} ({{ size.quantity }} в наличии)
-            </button>
-          {% endfor %}
-          <input type="hidden" name="size" id="selected-size" required>
-        </div>
+      <div class="size-selector">
+        {% for size in sizes %}
+          <button type="button" class="size-btn" data-size="{{ size.size }}" data-quantity="{{ size.quantity }}">
+            {{ size.size }} ({{ size.quantity }} в наличии)
+          </button>
+        {% endfor %}
+        <input type="hidden" name="size" id="selected-size" required>
+      </div>
 
-        <div id="quantity-controls" style="display:none;">
-          <button type="submit" name="action" value="decrease" id="btn-decrease">−</button>
-          <span id="quantity-display">1</span>
-          <button type="submit" name="action" value="increase" id="btn-increase">+</button>
-          <button type="submit" name="action" value="remove" id="remove-from-cart" class="cancel-btn">Удалить</button>
-        </div>
+     <div id="quantity-controls" style="display:none;">
+       <button type="submit" name="action" value="decrease" id="btn-decrease">−</button>
+       <span id="quantity-display">1</span>
+       <button type="submit" name="action" value="increase" id="btn-increase">+</button>
+        <button type="submit" name="action" value="remove" id="remove-from-cart" class="cancel-btn">Удалить</button>
+    </div>
 
-        <button id="add-to-cart" type="submit" name="action" value="add" class="add-to-cart-btn">В корзину</button>
+<button id="add-to-cart" type="submit" name="action" value="add" class="add-to-cart-btn">В корзину</button>
 
-        <div id="size-counter" style="margin-top: 1rem; font-weight: bold;"></div>
+<div id="size-counter" style="margin-top: 1rem; font-weight: bold;"></div>
       {% else %}
         <!-- Для товаров без размеров (шапки, кепки) -->
         <input type="hidden" name="size" value="ONE_SIZE">

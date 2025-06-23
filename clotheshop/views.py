@@ -41,7 +41,6 @@ def catalog(request):
     price_from = request.GET.get('price_from')
     price_to = request.GET.get('price_to')
     size_filter = request.GET.get('size')
-    sort_by = request.GET.get('sort', 'name')  # По умолчанию сортируем по имени
 
     if product_type:
         products = products.filter(product_type=product_type)
@@ -53,16 +52,6 @@ def catalog(request):
     # Фильтрация по размеру
     if size_filter:
         products = products.filter(sizes__size=size_filter, sizes__quantity__gt=0)
-    
-    # Сортировка
-    if sort_by == 'price_asc':
-        products = products.order_by('price')
-    elif sort_by == 'price_desc':
-        products = products.order_by('-price')
-    elif sort_by == 'name':
-        products = products.order_by('name')
-    elif sort_by == 'newest':
-        products = products.order_by('-id')
     
     # Фильтруем товары, которые есть в наличии
     available_products = []
@@ -80,8 +69,7 @@ def catalog(request):
             'type': product_type,
             'price_from': price_from,
             'price_to': price_to,
-            'size': size_filter,
-            'sort': sort_by
+            'size': size_filter
         }
     })
 

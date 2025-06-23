@@ -62,7 +62,7 @@ class ProductSize(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.size}"
-
+    
 
 class Message(models.Model):
     name = models.CharField(max_length=50)

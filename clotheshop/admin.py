@@ -69,4 +69,4 @@ class MessageAdmin(admin.ModelAdmin):
     class Media:
         css = {
             'all': ('admin/css/custom_admin.css',),
-        } 
+        }

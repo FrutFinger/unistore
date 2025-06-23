@@ -1,0 +1,5 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "chmod +x entrypoint.sh && ./entrypoint.sh" 

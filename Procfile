@@ -1,1 +1,1 @@
-web: chmod +x entrypoint.sh && ./entrypoint.sh 
+web: bash entrypoint.sh 
