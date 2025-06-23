@@ -1,19 +1,5 @@
 from django.contrib import admin
 from .models import Product, Message, Order, Favorite, ProductSize, OrderItem
-from django.contrib.admin import AdminSite
-from django.utils.translation import gettext_lazy as _
-
-
-class CustomAdminSite(AdminSite):
-    site_header = "Панель управления магазином"
-    site_title = "ClotheShop Admin"
-    index_title = "Добро пожаловать в админ-панель"
-    
-    def each_context(self, request):
-        context = super().each_context(request)
-        context['admin_css_url'] = 'admin/css/custom_admin.css'
-        return context
-    
 
 class ProductSizeInline(admin.TabularInline):
     model = ProductSize
@@ -22,7 +8,6 @@ class ProductSizeInline(admin.TabularInline):
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
-
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -43,7 +28,6 @@ class ProductAdmin(admin.ModelAdmin):
             'all': ('admin/css/custom_admin.css',),
         }
 
-
 @admin.register(Favorite)
 class FavoriteAdmin(admin.ModelAdmin):
     list_display = ('product', 'session_id')
@@ -51,7 +35,6 @@ class FavoriteAdmin(admin.ModelAdmin):
         css = {
             'all': ('admin/css/custom_admin.css',),
         }
-
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -86,4 +69,4 @@ class MessageAdmin(admin.ModelAdmin):
     class Media:
         css = {
             'all': ('admin/css/custom_admin.css',),
-        }
+        } 
