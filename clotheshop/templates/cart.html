@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/jquery.inputmask.min.js"></script>
+<script src="{% static 'js/cart.js' %}"></script>
+
+<div class="cart-container">
+  <div class="cart-items-block">
+    {% if cart_items %}
+      {% for item in cart_items %}
+        <div class="cart-item">
+          <div class="cart-image">
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+          </div>
+          <div class="cart-info">
+            <h3>{{ item.product.name }}</h3>
+            <p class="cart-meta">Размер: <strong>{{ item.size }}</strong></p>
+            <p class="cart-price">{{ item.product.price }} ₽</p>
+            <form method="post" action="{% url 'update_cart_quantity' %}" class="quantity-form">
+              {% csrf_token %}
+              <input type="hidden" name="product_id" value="{{ item.product.id }}">
+              <input type="hidden" name="size" value="{{ item.size }}">
+              <button name="action" value="decrease">−</button>
+              <span>{{ item.quantity }}</span>
+              <button name="action" value="increase">+</button>
+              <button name="action" value="remove" class="remove-btn">Удалить</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>Ваша корзина пуста.</p>
+    {% endif %}
+  </div>
+
+  <div class="cart-summary-block">
+    <h2>Ваша корзина</h2>
+    <p class="cart-count">Товаров: {{ total_quantity }}</p>
+    <p class="cart-total">Итого: {{ total_price }} ₽</p>
+    {% if cart_items %}
+      <button id="open-order-modal" class="checkout-button">Оформить заказ</button>
+    {% else %}
+      <button class="checkout-button" disabled style="background-color: #ccc; cursor: not-allowed;">Корзина пуста</button>
+    {% endif %}
+  </div>
+</div>
+
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div id="order-modal" class="modal">
+  <div class="modal-content">
+    <button id="close-modal" class="modal-close">&times;</button>
+    <h2>Оформление заказа</h2>
+    <form method="post" id="order-form" data-submit-url="{% url 'submit_order' %}">
+      {% csrf_token %}
+      <label>Имя:
+        {{ form.name }}
+        {% if form.name.errors %}
+          <div class="field-error">{{ form.name.errors.0 }}</div>
+        {% endif %}
+      </label>
+      <label>Телефон:
+        {{ form.phone }}
+        {% if form.phone.errors %}
+          <div class="field-error">{{ form.phone.errors.0 }}</div>
+        {% endif %}
+      </label>
+      <label>Время:
+        {{ form.time_slot }}
+        {% if form.time_slot.errors %}
+          <div class="field-error">{{ form.time_slot.errors.0 }}</div>
+        {% endif %}
+      </label>
+
+      <p class="messenger-label">Куда вам написать?</p>
+      <div class="messenger-toggle">
+        <div class="messenger-knob">Не писать</div>
+      </div>
+      {{ form.preferred_messenger }}
+      {% if form.preferred_messenger.errors %}
+        <div class="field-error">{{ form.preferred_messenger.errors.0 }}</div>
+      {% endif %}
+
+      <div class="form-errors" style="display: none; color:red; margin-bottom: 10px;"></div>
+
+      <button type="submit" class="checkout-button" id="submit-order-btn" disabled>Сформировать заказ</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

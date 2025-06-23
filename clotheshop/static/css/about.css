@@ -1,0 +1,337 @@
+/* ВИДЕО */
+
+.about-header {
+  position: relative;
+  background-color: #ffc8c8;
+  overflow: hidden;
+  padding: 2rem;
+  display: flex;         
+  align-items: center;
+  gap: 2rem;  
+  z-index: 0;
+}
+
+.about-video {
+  order: 2;
+  max-width: 325px;
+  flex-shrink: 0;
+  z-index: 1;
+  transform: translateX(-10px); 
+
+}
+
+.about-quote {
+  order: 1;
+  max-width: 800px;
+  align-self: center;
+  z-index: 15;
+  margin-right: 1rem;
+  transform: translateX(70px);    
+
+}
+
+.about-quote h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 5rem;
+  color: #b33a3a;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  line-height: 1.2;
+}
+
+.about-quote .highlight {
+  font-family: 'KaaosPro', sans-serif;
+  font-size: 8rem;
+  color: #ff4d4f;
+  text-shadow: 1px 1px 4px rgba(255, 77, 79, 0.6);
+  display: inline-block;
+  position: relative;
+  padding-left: 15px;
+  padding-right: 10px;
+}
+
+
+.about-quote .highlight::before {
+  left: 0;
+}
+
+.about-quote .highlight::after {
+  right: 0;
+}
+
+.about-header::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 400px;
+  height: 400px;
+  background: 
+    radial-gradient(circle at center, rgba(255, 77, 79, 0.08) 30%, transparent 40%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 77, 79, 0.03),
+      rgba(255, 77, 79, 0.03) 8px,
+      transparent 8px,
+      transparent 16px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 77, 79, 0.03),
+      rgba(255, 77, 79, 0.03) 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  pointer-events: none;
+  border-radius: 50%;
+  transform: rotate(25deg);
+  z-index: -1;
+}
+
+.about-header::after {
+  content: "";
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  width: 300px;
+  height: 300px;
+  background: 
+    radial-gradient(circle at center, rgba(255, 77, 79, 0.06) 40%, transparent 70%),
+    repeating-linear-gradient(
+      60deg,
+      rgba(255, 77, 79, 0.02),
+      rgba(255, 77, 79, 0.02) 6px,
+      transparent 6px,
+      transparent 12px
+    ),
+    repeating-linear-gradient(
+      -60deg,
+      rgba(255, 77, 79, 0.02),
+      rgba(255, 77, 79, 0.02) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  pointer-events: none;
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  z-index: -1; 
+}
+
+.about-header .pattern-extra {
+  position: absolute;
+  top: 40%;
+  right: 5%;
+  width: 200px;
+  height: 200px;
+  background:
+    radial-gradient(circle at center, rgba(255, 77, 79, 0.05) 25%, transparent 75%),
+    repeating-linear-gradient(
+      30deg,
+      rgba(255, 77, 79, 0.025),
+      rgba(255, 77, 79, 0.025) 4px,
+      transparent 4px,
+      transparent 8px
+    ),
+    repeating-linear-gradient(
+      -30deg,
+      rgba(255, 77, 79, 0.025),
+      rgba(255, 77, 79, 0.025) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  pointer-events: none;
+  border-radius: 50%;
+  transform: rotate(15deg);
+  z-index: -1;
+}
+
+
+/* Основной текст */
+.about-main-text .about-info {
+  background-color: #fff0f0;
+  border-radius: 15px;
+  padding: 2rem 3rem;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+}
+
+/* История магазина */
+.about-history {
+  background-color: #fff5f5;
+  border-radius: 0 0 15px 15px; /* скругляем только нижние углы */
+  padding: 0.1rem 3rem;
+  margin-bottom: 4rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  position: relative;
+}
+
+.about-history h3 {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 15px 15px 0 0; /* скругляем только верхние углы */
+  margin: 0 -3rem 1.5rem -3rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Принципы */
+.principles {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+}
+
+.principles-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+}
+
+/* Карточки принципов */
+.principles-cards {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1 1 250px;
+  padding: 1.8rem 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  cursor: default;
+  color: #333;
+}
+
+.card h4 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card-accessibility {
+  background-color: #ffebeb; /* светло-красный */
+  color: #a80000;
+}
+
+.card-style {
+  background-color: #ffe7f0; /* светло-розовый */
+  color: #a80050;
+}
+
+.card-quality {
+  background-color: #fff1e0; /* светло-оранжевый */
+  color: #a86400;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Последний блок */
+.contact-cta {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 2rem 2rem 3rem;
+  border-radius: 15px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.contact-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.contact-content {
+  display: flex;
+  align-items: center;   
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.shirt-img {
+  width: 140px;
+  transform: rotate(20deg);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  flex-shrink: 0; 
+  margin-left: 180px;
+}
+
+.shirt-img:hover {
+  transform: rotate(35deg);
+}
+
+.contact-text {
+  flex: 1; 
+  margin-left: -360px;
+}
+
+.contact-cta h3 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border-radius: 30px;
+  padding: 0.9rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block;
+  user-select: none;
+}
+
+.btn-white {
+  background-color: white;
+  color: #ff4d4f;
+  border: none;
+}
+
+.btn-white:hover {
+  background-color: #ffd6d7;
+}
+
+.btn-red {
+  background-color: #ff4d4f;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-red:hover {
+  background-color: #d93639;
+  border-color: #d93639;
+}
+
+
+@font-face {
+  font-family: 'KaaosPro';
+  src: url('/static/fonts/KaaosPro.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+

@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <div class="contact-container">
+        <h1 class="contact-title animate__animated animate__fadeInDown">Контакты</h1>
+
+        <div class="contact-grid">
+            <div class="contact-info animate__animated animate__fadeInLeft">
+                <div class="contact-card">
+                    <div class="icon-circle"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Адрес</h3>
+                    <p>г. Курск, ул. Карла Маркса д. 6</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon-circle"><i class="fas fa-phone-alt"></i></div>
+                    <h3>Телефон</h3>
+                    <p>+7 915 513 31 91</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon-circle"><i class="fas fa-envelope"></i></div>
+                    <h3>Email</h3>
+                    <p>egorova291210@gmail.com</p>
+                </div>
+                <div class="contact-card">
+                    <div class="icon-circle"><i class="fas fa-clock"></i></div>
+                    <h3>Время работы</h3>
+                    <p>с 9:00 до 20:00</p>
+                </div>
+            </div>
+
+            <div class="contact-map animate__animated animate__fadeInRight">
+                <div class="map-container">
+                    <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3704a85dc60dff1ac26f1dc0288762700379062ded9d94d46037727ec1fac265&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
+                    <div class="map-overlay"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Форма -->
+        <div class="contact-form-wrapper animate__animated animate__fadeIn">
+            <h1 class="contact-form-title">Связаться с нами</h1>
+
+           <form id="message-form" method="post" action="{% url 'contact' %}" class="form-style" novalidate>
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="left-column">
+                        <div class="form-group">
+                            {{ form.name.label_tag }}
+                            {{ form.name }}
+                            <div class="error-message" id="error-name" aria-live="polite">
+                                {% if form.name.errors %}
+                                    {% for error in form.name.errors %}
+                                        <span class="error-text">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.surname.label_tag }}
+                            {{ form.surname }}
+                            <div class="error-message" id="error-surname" aria-live="polite">
+                                {% if form.surname.errors %}
+                                    {% for error in form.surname.errors %}
+                                        <span class="error-text">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            <div class="error-message" id="error-email" aria-live="polite">
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                        <span class="error-text">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.phone.label_tag }}
+                            {{ form.phone }}
+                            <div class="error-message" id="error-phone" aria-live="polite">
+                                {% if form.phone.errors %}
+                                    {% for error in form.phone.errors %}
+                                        <span class="error-text">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="message-column">
+                        <div class="form-group message-group">
+                            {{ form.text.label_tag }}
+                            {{ form.text }}
+                            <div class="error-message" id="error-text" aria-live="polite">
+                                {% if form.text.errors %}
+                                    {% for error in form.text.errors %}
+                                        <span class="error-text">{{ error }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span>Отправить сообщение</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+           </form>
+
+            <div id="form-success" class="success-message" style="display: none;"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Всплывающее окно успешной отправки -->
+<div id="successPopup" class="popup" aria-live="polite" role="alert" aria-modal="true" tabindex="-1">
+    <div class="popup-content">
+        <p>Успешно отправлено!</p>
+        <button type="button" onclick="closePopup()">ОК</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/5.0.8/inputmask.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const phoneInput = document.querySelector('input[name="phone"]');
+    const emailInput = document.querySelector('input[name="email"]');
+    const form = document.getElementById('message-form');
+    const successDiv = document.getElementById('form-success');
+    const popup = document.getElementById('successPopup');
+
+    // Маска для телефона
+    if (phoneInput) {
+        Inputmask({
+            mask: "99999999999",
+            showMaskOnHover: false,
+            showMaskOnFocus: true,
+            placeholder: "_",
+            clearIncomplete: false,
+            autoUnmask: false,
+        }).mask(phoneInput);
+    }
+
+    // Закрытие всплывающего окна
+    window.closePopup = function () {
+        popup.style.display = 'none';
+    }
+
+    if (form) {
+        form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    // Очистка ошибок
+    ['name', 'surname', 'email', 'phone', 'text'].forEach(f => {
+        const err = document.getElementById(`error-${f}`);
+        if (err) err.innerHTML = '';
+    });
+    successDiv.style.display = 'none';
+
+    // Валидация телефона
+    let isValid = true;
+    const phoneValue = phoneInput.value.replace(/\D/g, '');
+    if (phoneValue.length !== 11) {
+        document.getElementById('error-phone').innerHTML = '<span class="error-text">Номер должен содержать 11 цифр</span>';
+        isValid = false;
+    } else if (!phoneValue.startsWith('7')) {
+        document.getElementById('error-phone').innerHTML = '<span class="error-text">Номер должен начинаться с 7</span>';
+        isValid = false;
+    }
+
+    // Валидация почты
+    const emailValue = emailInput.value.trim();
+    const emailRegex = /^[\w.-]+@(gmail\.com|mail\.ru|yandex\.ru)$/;
+    if (emailValue && !emailRegex.test(emailValue)) {
+        document.getElementById('error-email').innerHTML = '<span class="error-text">Введите корректную почту (gmail.com, mail.ru или yandex.ru)</span>';
+        isValid = false;
+    }
+
+    if (!isValid) return;
+
+    try {
+        const response = await fetch("{% url 'contact' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": form.querySelector("[name=csrfmiddlewaretoken]").value,
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: new FormData(form)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            // Показываем всплывающее окно успеха
+            popup.style.display = 'flex';
+            form.reset();
+        } else {
+            // Логируем ошибки для отладки
+            console.log('Errors from server:', data.errors);
+
+            // Показываем ошибки полей
+            if (data.errors) {
+                for (const field in data.errors) {
+                    if (field === '__all__') {
+                        // Общие ошибки формы
+                        const errorDiv = document.getElementById('error-text');
+                        if (errorDiv) {
+                            errorDiv.innerHTML = '<span class="error-text">' + data.errors[field].join(', ') + '</span>';
+                        }
+                    } else {
+                        const errorDiv = document.getElementById(`error-${field}`);
+                        if (errorDiv) {
+                            errorDiv.innerHTML = '<span class="error-text">' + data.errors[field].join(', ') + '</span>';
+                        }
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Ошибка при отправке формы:', error);
+        const errorDiv = document.getElementById('error-text');
+        if (errorDiv) {
+            errorDiv.innerHTML = '<span class="error-text">Произошла ошибка при отправке. Пожалуйста, попробуйте позже.</span>';
+        }
+    }
+});
+        // Валидация полей при потере фокуса
+        const validateField = (field) => {
+            const value = field.value.trim();
+            const name = field.name;
+            const errorDiv = document.getElementById(`error-${name}`);
+
+            if (field.hasAttribute('required') && !value) {
+                errorDiv.innerHTML = '<span class="error-text">Это поле обязательно для заполнения</span>';
+                return false;
+            }
+
+            if (name === 'email' && value) {
+                const emailRegex = /^[\w.-]+@(gmail\.com|mail\.ru|yandex\.ru)$/;
+                if (!emailRegex.test(value)) {
+                    errorDiv.innerHTML = '<span class="error-text">Введите корректную почту (gmail.com, mail.ru или yandex.ru)</span>';
+                    return false;
+                }
+            }
+
+            errorDiv.innerHTML = "";
+            return true;
+        };
+
+        document.querySelectorAll('#message-form input, #message-form textarea').forEach(field => {
+            field.addEventListener('blur', () => validateField(field));
+        });
+    }
+    
+});
+</script>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="page-title">Каталог товаров</h1>
+<link rel="stylesheet" href="{% static 'css/catalog.css' %}?v=1">
+
+<!-- Фильтрация -->
+<form method="get" class="filter-form">
+    <label>Тип:
+        <select name="type">
+            <option value="">Все</option>
+            <option value="Бермуды">Бермуды</option>
+            <option value="Брюки">Брюки</option>
+            <option value="Джинсы">Джинсы</option>
+            <option value="Кепка">Кепка</option>
+            <option value="Костюм">Костюм</option>
+            <option value="Куртка">Куртка</option>
+            <option value="Лонгслив">Лонгслив</option>
+            <option value="Платье">Платье</option>
+            <option value="Рубашка">Рубашка</option>
+            <option value="Свитер">Свитер</option>
+            <option value="Свитшот">Свитшот</option>
+            <option value="Футболка">Футболка</option>
+            <option value="Худи">Худи</option>
+            <option value="Шапка">Шапка</option>
+            <option value="Шорты">Шорты</option>
+            <option value="Юбка">Юбка</option>
+        </select>
+    </label>
+    <label>Цена от:
+        <input type="number" name="price_from" min="0">
+    </label>
+    <label>до:
+        <input type="number" name="price_to" min="0">
+    </label>
+
+    <button type="submit">Фильтровать</button>
+    <a href="{% url 'catalog' %}" style="text-decoration: none;">
+        <button type="button" style="background-color: #888; margin-left: 0.5rem;">
+            Сбросить
+        </button>
+    </a>
+</form>
+
+<div class="background-pattern">
+    <img src="{% static 'svg/bg_1.svg' %}" class="bg-shape bg-1">
+    <img src="{% static 'svg/bg_2.svg' %}" class="bg-shape bg-2">
+    <img src="{% static 'svg/bg_3.svg' %}" class="bg-shape bg-3">
+    <img src="{% static 'svg/bg_4.svg' %}" class="bg-shape bg-4">
+    <img src="{% static 'svg/bg_5.svg' %}" class="bg-shape bg-5">
+    <img src="{% static 'svg/bg_6.svg' %}" class="bg-shape bg-6">
+    <img src="{% static 'svg/bg_7.svg' %}" class="bg-shape bg-7">
+    <img src="{% static 'svg/bg_8.svg' %}" class="bg-shape bg-8">
+</div>
+
+<!-- Сетка товаров -->
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <!-- Изображение -->
+        <div class="product-image">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="{% static 'images/item_placeholder.png' %}" alt="{{ product.name }}">
+            {% endif %}
+        </div>
+
+        <!-- Контент -->
+        <div class="product-card-content">
+            <h3 style="margin-top: 0.5rem; font-size: 1.25rem;">{{ product.name }}</h3>
+
+            <p class="product-price">
+                {{ product.price }} ₽
+            </p>
+
+            <!-- Кнопки -->
+            <div class="product-buttons">
+                <a href="{% url 'product_detail' product.id %}">
+                    <button type="button">👜 Приобрести</button>
+                </a>
+                <form method="post" action="{% url 'add_to_favorites' product.id %}">
+                    {% csrf_token %}
+                    <button type="submit">❤️</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

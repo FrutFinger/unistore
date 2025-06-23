@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+<section class="about-header">
+  <div class="about-video">
+    <iframe src="https://vk.com/video_ext.php?oid=533487195&id=456239887&hd=2&autoplay=3"
+      width="325" height="646"
+      allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+      frameborder="0" allowfullscreen></iframe>
+  </div>
+<div class="about-quote">
+  <h2>ЮНИ - это не просто мода,<br> <span class="highlight">ЭТО - ТЫ!</span></h2>
+</div>
+  <div class="pattern-extra"></div> 
+</section>
+
+<section class="about-main-text">
+  <div class="about-info">
+    <p>
+      Магазин одежды ЮНИ открылся в 2024 году и специализируется на модной одежде для детей и подростков, а также для всех возрастов. 
+      Мы гордимся высоким качеством нашей продукции и надёжностью бренда, постоянно обновляя ассортимент и следя за современными трендами.
+    </p>
+  </div>
+</section>
+
+<section class="about-history">
+  <h3>История нашего магазина</h3>
+  <div class="history-content">
+    <p>
+      Магазин ЮНИ появился как отдельное направление более крупного магазина «Алладин», который на протяжении многих лет обслуживает
+      аудиторию с более бюджетными потребностями. ЮНИ создавался как пространство для тех, кто ищет самые модные, новые и качественные
+      вещи по доступным ценам. Наша задача — предоставить покупателям лучшее из мира моды, оставаясь при этом доступными и близкими по духу.
+    </p>
+  </div>
+</section>
+
+<section class="principles">
+  <h3 class="principles-title">Наши принципы</h3>
+  <div class="principles-cards">
+    <div class="card card-accessibility">
+      <h4>ДОСТУПНОСТЬ</h4>
+      <p>Мы стараемся сделать стильную одежду доступной для каждого, предлагая выгодные цены и акции.</p>
+    </div>
+    <div class="card card-style">
+      <h4>СТИЛЬ</h4>
+      <p>Каждая коллекция отражает современные тенденции, помогая вам выглядеть уверенно и модно.</p>
+    </div>
+    <div class="card card-quality">
+      <h4>КАЧЕСТВО</h4>
+      <p>Мы тщательно выбираем поставщиков и контролируем качество, чтобы каждая вещь служила долго.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats-section {
+    position: relative;
+    height: 650px;
+    margin: 5rem auto;
+    max-width: 1200px;
+  }
+
+  .stat-container {
+    position: absolute;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .stat-label {
+    margin-bottom: 2rem;
+    font-size:1.6rem;
+    font-weight: 1000;
+  }
+
+  .stat-block {
+    width: 280px;
+    height: 280px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8rem;
+    font-weight: 1000; /* максимально жирный */
+    font-stretch: extra-expanded;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    margin: 0 auto;
+  }
+
+  .stat-block:hover {
+    transform: scale(1.08) rotate(var(--rotate, 0deg));
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Цвета блоков */
+  .bg-pink {
+    background-color: #ff9999;
+    transform: rotate(-8deg);
+  }
+
+  .bg-orange {
+    background-color: #ffc98b;
+    transform: rotate(-7deg);
+  }
+
+  .bg-lightpink {
+    background-color: #ffb7a8;
+    transform: rotate(6deg);
+  }
+
+  /* Цвета текста */
+  .text-burgundy { color: #642E2E; }
+  .text-brown { color: #86664B; }
+  .text-choco { color: #7B4A3F; }
+
+  /* Позиционирование */
+  .block-1 {
+    top: 0;
+    left: -60px;
+  }
+
+  .block-2 {
+    top: 180px;
+    right: 0;
+  }
+
+  .block-3 {
+    bottom: -40px;
+    left: 35%;
+  }
+</style>
+
+<section class="stats-section" aria-label="О нас — цифры">
+  <div class="stat-container block-1">
+    <div class="stat-label text-burgundy">Поставщиков из&nbsp;разных уголков мира</div>
+    <div class="stat-block bg-pink text-burgundy">40</div>
+  </div>
+  <div class="stat-container block-2">
+    <div class="stat-label text-choco">Лет на рынке</div>
+    <div class="stat-block bg-lightpink text-choco">8</div>
+  </div>
+  <div class="stat-container block-3">
+    <div class="stat-label text-brown">Довольных клиентов</div>
+    <div class="stat-block bg-orange text-brown">97%</div>
+  </div>
+</section>
+
+
+<section class="contact-cta">
+  <div class="contact-wrapper">
+    <img src="{% static 'images/Shirt.svg' %}" alt="Shirt" class="shirt-img" />
+    <div class="contact-text">
+      <h3>Есть вопросы — напишите нам</h3>
+      <div class="contact-buttons">
+        <a href="{% url 'contact' %}" class="btn btn-white">Контакты</a>
+        <a href="{% url 'catalog' %}" class="btn btn-red">Каталог</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+
+<!-- Хлебные крошки -->
+<nav class="breadcrumbs">
+  <a href="{% url 'catalog' %}">Каталог</a> &gt; <span>{{ product.name }}</span>
+</nav>
+
+<div class="product-detail-card">
+  <div class="product-image">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+  </div>
+  <div class="product-info">
+    <h1 class="product-name">{{ product.name }}</h1>
+    <div class="product-type">{{ product.product_type }}</div>
+    <div class="product-price">{{ product.price }} ₽</div>
+    <div class="product-description">
+      Отличный выбор для стильного и комфортного образа. Высококачественные материалы и современный дизайн.
+    </div>
+
+    <form method="post" action="{% url 'add_to_cart_detail' product.id %}" id="size-form">
+      {% csrf_token %}
+      
+      {% if product.has_sizes %}
+        <!-- Для товаров с размерами -->
+        <div class="size-selector">
+          {% for size in sizes %}
+            <button type="button" class="size-btn" data-size="{{ size.size }}" data-quantity="{{ size.quantity }}">
+              {{ size.size }} ({{ size.quantity }} в наличии)
+            </button>
+          {% endfor %}
+          <input type="hidden" name="size" id="selected-size" required>
+        </div>
+
+        <div id="quantity-controls" style="display:none;">
+          <button type="submit" name="action" value="decrease" id="btn-decrease">−</button>
+          <span id="quantity-display">1</span>
+          <button type="submit" name="action" value="increase" id="btn-increase">+</button>
+          <button type="submit" name="action" value="remove" id="remove-from-cart" class="cancel-btn">Удалить</button>
+        </div>
+
+        <button id="add-to-cart" type="submit" name="action" value="add" class="add-to-cart-btn">В корзину</button>
+
+        <div id="size-counter" style="margin-top: 1rem; font-weight: bold;"></div>
+      {% else %}
+        <!-- Для товаров без размеров (шапки, кепки) -->
+        <input type="hidden" name="size" value="ONE_SIZE">
+        
+        <div class="no-size-info">
+          <p><strong>Доступно: {{ product.no_size_info.quantity }} шт.</strong></p>
+        </div>
+
+        <div id="quantity-controls" style="display:none;">
+          <button type="submit" name="action" value="decrease" id="btn-decrease">−</button>
+          <span id="quantity-display">1</span>
+          <button type="submit" name="action" value="increase" id="btn-increase">+</button>
+          <button type="submit" name="action" value="remove" id="remove-from-cart" class="cancel-btn">Удалить</button>
+        </div>
+
+        <button id="add-to-cart" type="submit" name="action" value="add" class="add-to-cart-btn">В корзину</button>
+      {% endif %}
+
+    </form>
+
+<script>
+  window.initialCartState = JSON.parse('{{ cart_json|escapejs }}');
+  window.productHasSizes = '{{ product.has_sizes }}' === 'True';
+</script>
+  </div>
+</div>
+
+<script src="{% static 'js/product_detail.js' %}"></script>
+
+<hr style="margin: 3rem 0; border: none; border-top: 1px solid #eee;">
+
+<h2 class="related-title">Вам также может понравиться</h2>
+<div class="related-products">
+  {% for related in related_products %}
+    <div class="related-card">
+      <a href="{% url 'product_detail' related.id %}">
+        <img src="{{ related.image.url }}" alt="{{ related.name }}">
+        <div class="related-info">
+          <div class="related-name">{{ related.name }}</div>
+          <div class="related-price">{{ related.price }} ₽</div>
+        </div>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

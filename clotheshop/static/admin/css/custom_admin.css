@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+body, input, select, textarea, .grp-module, .grp-group {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+#header {
+    background-color: #dc9595 !important;
+}
+
+a:link, a:visited {
+    color: #dc9595 !important;
+}
+
+.module h2, .module caption, .inline-group h2 {
+    color: #dc9595 !important;
+    font-weight: 600;
+}
+
+.button, input[type=submit], .submit-row input {
+    background-color: #dc9595 !important;
+    border-color: #dc9595 !important;
+    color: white !important;
+}
+
+.button:hover, input[type=submit]:hover, .submit-row input:hover {
+    background-color: #dc9595 !important;
+}

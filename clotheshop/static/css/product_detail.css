@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+.breadcrumbs {
+  font-size: 0.9rem;
+  margin: 1rem 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+.breadcrumbs a {
+  color: #ff4d4f;
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+.product-detail-card {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto 3rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  font-family: 'Montserrat', sans-serif;
+  background-color: #fff;
+}
+
+.product-image {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 1rem;
+  max-height: 450px;
+  margin-right: 2rem;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; /* чуть обрезает сверху */
+  border-radius: 1rem;
+}
+
+.product-info {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-name {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+  color: #000;
+}
+
+.product-type {
+  display: inline-block;
+  background-color: #ffd6d6;
+  color: #b33939;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.product-price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff4d4f;
+  margin-bottom: 1rem;
+}
+
+.product-description {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.size-selector {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.size-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ff4d4f;
+  background: none;
+  color: #ff4d4f;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  user-select: none;
+  min-width: 70px;
+  text-align: center;
+}
+.size-btn:hover:not(.selected) {
+  background-color: #ffe6e6;
+}
+.size-btn.selected {
+  background-color: #ff4d4f;
+  color: white;
+  border-color: #ff4d4f;
+}
+
+#add-to-cart {
+  width: 100%;
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 1rem 0;
+  border-radius: 0.7rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+#add-to-cart:disabled {
+  background-color: #ffb3b3;
+  cursor: not-allowed;
+}
+
+#remove-from-cart {
+  background-color: white;
+  color: #ff4d4f;
+  border: 2px solid #ff4d4f;
+  padding: 0.5rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  min-width: 120px; 
+  text-align: center; 
+  box-sizing: border-box; 
+}
+
+#remove-from-cart:hover {
+  background-color: #ffe6e6;
+}
+
+
+#quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#quantity-controls button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  border-radius: 0.3rem;
+  font-size: 1.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#quantity-controls button:disabled {
+  background-color: #ffb3b3;
+  cursor: not-allowed;
+}
+
+#quantity-display {
+  font-weight: 700;
+  font-size: 1.2rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+
+.related-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.related-products {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 0 2rem 3rem;
+}
+
+.related-card {
+  width: 200px;
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.related-card:hover {
+  transform: translateY(-5px);
+}
+
+.related-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.related-info {
+  padding: 1rem;
+}
+
+.related-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #000;
+}
+
+.related-price {
+  color: #ff4d4f;
+  font-weight: 700;
+}

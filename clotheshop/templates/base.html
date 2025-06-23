@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ЮНИ | Магазин модной одежды{% endblock %}</title>
+
+    <!-- Шрифт -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<div class="background-pattern">
+    <img src="{% static 'images/bg_1.svg' %}" class="bg-shape bg-1">
+    <img src="{% static 'images/bg_2.svg' %}" class="bg-shape bg-2">
+    <img src="{% static 'images/bg_3.svg' %}" class="bg-shape bg-3">
+    <img src="{% static 'images/bg_4.svg' %}" class="bg-shape bg-4">
+    <img src="{% static 'images/bg_5.svg' %}" class="bg-shape bg-5">
+    <img src="{% static 'images/bg_6.svg' %}" class="bg-shape bg-6">
+    <img src="{% static 'images/bg_7.svg' %}" class="bg-shape bg-7">
+    <img src="{% static 'images/bg_8.svg' %}" class="bg-shape bg-8">
+</div>
+
+<!-- ВЕРХНЕЕ МЕНЮ -->
+<header class="site-header">
+    <div class="nav-container">
+        <a href="{% url 'home' %}" class="logo-link">
+            <img src="{% static 'images/logo.png' %}" alt="Логотип" class="logo">
+        </a>
+        <nav class="main-nav">
+    <a href="{% url 'home' %}">Главная</a>
+    <a href="{% url 'catalog' %}">Каталог</a>
+    <a href="{% url 'contact' %}">Контакты</a>
+    <a href="{% url 'favorites' %}">Избранное</a>
+    <a href="{% url 'cart' %}">Корзина</a>
+</nav>
+
+    </div>
+</header>
+
+<!-- СОДЕРЖИМОЕ -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- ФУТЕР -->
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Слева -->
+        <div class="footer-left">
+            <h2>ЮНИ</h2>
+            <p class="footer-copy">(с) Все права защищены. 2025</p>
+        </div>
+
+        <!-- Справа -->
+        <div class="footer-right">
+            <h2>КОНТАКТЫ</h2>
+            <ul class="footer-contacts">
+                <li><a href="mailto:egorova291210@gmail.com">egorova291210@gmail.com</a></li>
+                <li><a href="tel:+79155133191">+7 (915) 513-31-91</a></li>
+                <li><a href="https://vk.com/uny_kursk" target="_blank">ВКонтакте</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

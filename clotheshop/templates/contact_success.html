@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<style>
+    .success-section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+        text-align: center;
+    }
+    .success-container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+    .success-title {
+        color: #502c2c;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    .success-message {
+        color: #b46969;
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+    .back-btn {
+        display: inline-block;
+        background-color: #3498db;
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+    .back-btn:hover {
+        background-color: #2980b9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="success-section">
+    <div class="success-container animate__animated animate__fadeInUp">
+        <h1 class="success-title">Сообщение отправлено!</h1>
+        <p class="success-message">Спасибо за ваше обращение. Мы скоро с вами свяжемся.</p>
+        <a href="{% url 'contact' %}" class="back-btn">Вернуться на страницу контактов</a>
+    </div>
+</section>
+{% endblock %} 

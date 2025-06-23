@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/order_success.css' %}">
+
+<div class="success-container">
+    <div class="success-decoration decoration-1"></div>
+    <div class="success-decoration decoration-2"></div>
+    
+    <h1 class="success-title">Спасибо за ваш заказ!</h1>
+    <p class="success-message">
+        Ваш заказ №{{ order.id }} успешно оформлен.<br>
+        Мы свяжемся с вами в ближайшее время через 
+        <strong>
+            {% if order.preferred_messenger == 'telegram' %}Telegram
+            {% elif order.preferred_messenger == 'whatsapp' %}WhatsApp
+            {% else %}указанный способ связи{% endif %}
+        </strong>.
+    </p>
+    
+    <div class="order-details">
+        <div class="order-section">
+            <h3>Информация о заказе</h3>
+            <p><strong>Имя:</strong> {{ order.name }}</p>
+            <p><strong>Телефон:</strong> {{ order.phone }}</p>
+            <p><strong>Время получения:</strong> {{ order.time_slot }}</p>
+            <p><strong>Дата заказа:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+        </div>
+        
+        <div class="order-section">
+            <h3>Состав заказа</h3>
+            <ul class="order-items">
+                {% for item in order_items %}
+                <li class="order-item">
+                    <div class="item-image">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                    </div>
+                    <div class="item-info">
+                        <div class="item-name">{{ item.product.name }}</div>
+                        <div class="item-meta">Размер: {{ item.size }} | Количество: {{ item.quantity }}</div>
+                    </div>
+                    <div class="item-price">{{ item.product.price }} ₽ × {{ item.quantity }}</div>
+                </li>
+                {% endfor %}
+            </ul>
+            
+            <div class="order-total">
+                Итого: {{ total }} ₽
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="{% url 'catalog' %}" class="back-to-shop">Вернуться в каталог</a>
+    </div>
+</div>
+{% endblock %}

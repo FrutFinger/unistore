@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+<!-- Блок 1: Заголовок с фоном -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1>ЮНИ - это не просто мода.</h1>
+    <h2>ЮНИ - <span class="highlight">ЭТО ТЫ</span></h2>
+    <div class="hero-shapes">
+      <div class="shape-circle"></div>
+      <div class="shape-triangle"></div>
+      <div class="shape-wave"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок 2: О нас с медвежонком -->
+<section class="about-section">
+  <div class="bear-container">
+    <img src="{% static 'images/bear.png' %}" alt="Медвежонок ЮНИ" class="bear-img">
+  </div>
+  <div class="about-content">
+    <div class="rotated-box">
+      <div class="rotated-title">Немного о нас</div>
+    </div>
+    <div class="about-text">
+      <p>
+        Мы появились как направление более крупного магазина созданного для аудитории с более бюджетными потребностями.<br><br>
+        ЮНИ создавался как пространство для тех, кто ищет самые модные, новые и качественные вещи по доступным ценам.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- Блок 3: Принципы -->
+<section class="principles-section">
+  <h3 class="section-title">Наши принципы</h3>
+  <div class="principles-cards">
+    <div class="card card-red">
+      <h4>ДОСТУПНОСТЬ</h4>
+      <p>Мы стараемся сделать стильную одежду доступной для каждого, предлагая выгодные цены и акции.</p>
+    </div>
+    <div class="card card-pink">
+      <h4>СТИЛЬ</h4>
+      <p>Каждая коллекция отражает современные тенденции, помогая вам выглядеть уверенно и модно.</p>
+    </div>
+    <div class="card card-orange">
+      <h4>КАЧЕСТВО</h4>
+      <p>Мы тщательно выбираем поставщиков и контролируем качество, чтобы каждая вещь служила долго.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Блок Карусель -->
+<section class="products-carousel-section">
+  <div class="section-header">
+    <h3 class="section-title">Наши товары</h3>
+    <a href="{% url 'catalog' %}" class="view-all">Смотреть все →</a>
+  </div>
+  
+  <div class="carousel-container">
+    {% if featured_products %}
+      <div class="products-carousel">
+        {% for product in featured_products %}
+        <div class="product-card">
+          <div class="product-image">
+            {% if product.image %}
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+            {% else %}
+              <img src="{% static 'images/item_placeholder.png' %}" alt="{{ product.name }}" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="product-card-content">
+            <h3>{{ product.name|truncatechars:30 }}</h3>
+            <p class="product-price">{{ product.price }} ₽</p>
+            <div class="product-buttons">
+              <a href="{% url 'product_detail' product.id %}" class="btn-details">Подробнее</a>
+              <form method="post" action="{% url 'add_to_favorites' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-favorite">❤️</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+      {% if featured_products|length > 3 %}
+        <div class="carousel-controls">
+          <button class="carousel-prev">←</button>
+          <button class="carousel-next">→</button>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="no-products">
+        <p>Товары скоро появятся!</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Блок 4: Мы в цифрах -->
+<section class="stats-section">
+  <h3 class="section-title">Мы в цифрах</h3>
+  <div class="stats-container">
+    <div class="stat-block stat-red">
+      <div class="stat-number">40</div>
+      <div class="stat-label">Поставщиков</div>
+    </div>
+    <div class="stat-block stat-yellow">
+      <div class="stat-number">97%</div>
+      <div class="stat-label">Довольных клиентов</div>
+    </div>
+    <div class="stat-block stat-orange">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Лет на рынке</div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок 5: FAQ -->
+<section class="faq-section">
+  <h3 class="section-title">Частые вопросы</h3>
+  <div class="faq-container">
+    <div class="faq-item">
+      <button class="faq-question">Как сформировать заказ?<span class="arrow">+</span></button>
+      <div class="faq-answer">
+        <p>После того как вы выбрали интересующие вас товары и добавили их в корзину, перейдите на страницу корзины. Там вы найдёте кнопку "Сформировать заказ" — нажмите на неё. Далее система предложит вам заполнить короткую форму: ваше имя, номер телефона и желаемое время получения. Мы постараемся сделать этот процесс максимально простым и удобным.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">В какое время я могу забрать свой заказ?<span class="arrow">+</span></button>
+      <div class="faq-answer">
+        <p>Вы сами выбираете удобное время получения заказа. Просто укажите желаемое время при оформлении — и мы заранее соберём все позиции. Когда вы придёте в магазин, заказ уже будет готов, останется только его оплатить и забрать. Мы стараемся подстроиться под ваш ритм.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">В течение какого времени я могу забрать свой заказ?<span class="arrow">+</span></button>
+      <div class="faq-answer">
+        <p>Ваш заказ будет ожидать вас в магазине до конца текущего рабочего дня. Если вы не сможете подойти в указанное время, администратор свяжется с вами. В случае отсутствия ответа заказ может быть отменён после закрытия магазина. Пожалуйста, постарайтесь забирать заказы вовремя — это помогает нам лучше планировать работу.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Какие данные нужно предоставить для получения моего заказа?<span class="arrow">+</span></button>
+      <div class="faq-answer">
+        <p>Для получения заказа достаточно назвать ваше имя, указанное при оформлении. Администратор найдёт ваш заказ, покажет вам содержимое и, при необходимости, предложит примерку.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question">Как я могу оплатить покупку?<span class="arrow">+</span></button>
+      <div class="faq-answer">
+        <p>Оплата заказа осуществляется при получении в магазине. Мы принимаем наличные, банковские карты, а также оплату по QR-коду. Вы можете выбрать наиболее удобный для вас способ.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Блок 6: CTA -->
+<section class="cta-section">
+  <div class="cta-content">
+    <img src="{% static 'images/Shirt.svg' %}" alt="Футболка" class="cta-img">
+    <div class="cta-text">
+      <h3>Готовы начать шопинг?</h3>
+      <div class="cta-buttons">
+        <a href="{% url 'catalog' %}" class="btn btn-white">Перейти в каталог</a>
+        <a href="{% url 'contact' %}" class="btn btn-red">Написать нам</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Новый блок: Отзывы -->
+<section class="reviews-section">
+  <h3 class="section-title">Отзывы наших клиентов</h3>
+  <div class="reviews-container">
+    <div class="review-card">
+      <div class="review-content">
+        <p>"Очень довольна покупками! Качество на высоте, цены приятные, а вещи действительно модные."</p>
+      </div>
+      <div class="review-author">
+        <div class="author-avatar">А</div>
+        <div class="author-info">
+          <h5>Анна</h5>
+          <span>Постоянный клиент</span>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-content">
+        <p>"Дочке-подростку всё впервые понравилось, просто класс, вы - настоящие спасители!"</p>
+      </div>
+      <div class="review-author">
+        <div class="author-avatar">М</div>
+        <div class="author-info">
+          <h5>Мария</h5>
+          <span>Новый клиент</span>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-content">
+        <p>"Лучшее соотношение цены и качества! Ещё не мерил, но вроде как прикольно!"</p>
+      </div>
+      <div class="review-author">
+        <div class="author-avatar">И</div>
+        <div class="author-info">
+          <h5>Евгений</h5>
+          <span>Новый клиент</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

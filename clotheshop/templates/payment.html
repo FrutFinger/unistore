@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<script src="{% static 'js/payment.js' %}" defer></script>
+
+<div class="background-pattern">
+    <img src="{% static 'images/bg_1.svg' %}" class="bg-shape bg-1">
+    <img src="{% static 'images/bg_2.svg' %}" class="bg-shape bg-2">
+    <img src="{% static 'images/bg_3.svg' %}" class="bg-shape bg-3">
+    <img src="{% static 'images/bg_4.svg' %}" class="bg-shape bg-4">
+    <img src="{% static 'images/bg_5.svg' %}" class="bg-shape bg-5">
+    <img src="{% static 'images/bg_6.svg' %}" class="bg-shape bg-6">
+    <img src="{% static 'images/bg_7.svg' %}" class="bg-shape bg-7">
+    <img src="{% static 'images/bg_8.svg' %}" class="bg-shape bg-8">
+    <img src="{% static 'images/bg_9.svg' %}" class="bg-shape bg-9">
+    <img src="{% static 'images/bg_10.svg' %}" class="bg-shape bg-10">
+    <img src="{% static 'images/bg_11.svg' %}" class="bg-shape bg-11">
+    <img src="{% static 'images/bg_12.svg' %}" class="bg-shape bg-12">
+    <img src="{% static 'images/bg_13.svg' %}" class="bg-shape bg-13">
+    <img src="{% static 'images/bg_14.svg' %}" class="bg-shape bg-14">
+    <img src="{% static 'images/bg_15.svg' %}" class="bg-shape bg-15">
+    <img src="{% static 'images/bg_16.svg' %}" class="bg-shape bg-16">
+</div>
+
+<div class="faq-container">
+    <h1>Оплата и получение</h1>
+
+    <div class="faq-item">
+        <button class="faq-question">Как сформировать заказ?<span class="arrow">+</span></button>
+        <div class="faq-answer">
+            После того как вы выбрали интересующие вас товары и добавили их в корзину, перейдите на страницу корзины. 
+            Там вы найдёте кнопку "Сформировать заказ" — нажмите на неё. Далее система предложит вам заполнить короткую форму: 
+            ваше имя, номер телефона и желаемое время получения. Мы постараемся сделать этот процесс максимально простым и удобным.
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">В какое время я могу забрать свой заказ?<span class="arrow">+</span></button>
+        <div class="faq-answer">
+        Вы сами выбираете удобное время получения заказа. Просто укажите желаемое время при оформлении — и мы заранее соберём все позиции. 
+        Когда вы придёте в магазин, заказ уже будет готов, останется только его оплатить и забрать. 
+        Мы стараемся подстроиться под ваш ритм.
+
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">В течение какого времени я могу забрать свой заказ?<span class="arrow">+</span></button>
+        <div class="faq-answer">
+        Ваш заказ будет ожидать вас в магазине до конца текущего рабочего дня. 
+        Если вы не сможете подойти в указанное время, администратор свяжется с вами. 
+        В случае отсутствия ответа заказ может быть отменён после закрытия магазина. 
+        Пожалуйста, постарайтесь забирать заказы вовремя — это помогает нам лучше планировать работу.
+
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">Какие данные нужно предоставить для получения моего заказа?<span class="arrow">+</span></button>
+        <div class="faq-answer">
+        Для получения заказа достаточно назвать ваше имя, указанное при оформлении. 
+        Администратор найдёт ваш заказ, покажет вам содержимое и, при необходимости, предложит примерку. 
+
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <button class="faq-question">Как я могу оплатить покупку?<span class="arrow">+</span></button>
+        <div class="faq-answer">
+        Оплата заказа осуществляется при получении в магазине. Мы принимаем наличные, банковские карты, а также оплату по QR-коду. 
+        Вы можете выбрать наиболее удобный для вас способ.
+
+        </div>
+    </div>
+</div>
+{% endblock %}

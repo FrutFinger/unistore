@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/favorites.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 class="favorites-title">Избранное</h1>
+
+{% if favorites %}
+<div class="favorites-container">
+    <div class="favorites-grid">
+        {% for item in favorites %}
+        <div class="favorite-card" data-fav-id="{{ item.id }}">
+            <a href="{% url 'product_detail' item.product.id %}">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="favorite-image">
+            </a>
+            <div class="favorite-info">
+                <h3>{{ item.product.name }}</h3>
+                <p class="favorite-price">{{ item.product.price }} ₽</p>
+
+                <div class="favorite-buttons">
+                    <a href="{% url 'product_detail' item.product.id %}" class="btn-details">Подробнее</a>
+                    <button class="btn-remove" data-id="{{ item.id }}">Удалить</button>
+                </div>
+            </div>
+        </div> 
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<p class="empty-message">Вы пока не добавили товары в избранное.</p>
+{% endif %}
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.btn-remove');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const favId = btn.getAttribute('data-id');
+            const card = document.querySelector(`.favorite-card[data-fav-id="${favId}"]`);
+            
+            fetch(`/favorites/remove/${favId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ id: favId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.status === 'success'){
+                    if(card){
+                        card.classList.add('removing');
+                        setTimeout(() => {
+                            card.remove();
+
+                            const remainingCards = document.querySelectorAll('.favorite-card');
+                            if (remainingCards.length === 0) {
+                                const container = document.querySelector('.favorites-container');
+                                container.innerHTML = '<p class="empty-message">Вы пока не добавили товары в избранное.</p>';
+                            }
+                        }, 500);
+                    }
+                } else {
+                    alert('Ошибка при удалении из избранного');
+                }
+            });
+        });
+    });
+});
+
+// Получение CSRF токена
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}
