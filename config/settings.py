@@ -80,7 +80,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Получаем DATABASE_URL из переменных окружения
 DATABASE_URL = os.environ.get('DATABASE_URL')
 
-if DATABASE_URL:
+# Проверяем, находимся ли мы в процессе сборки
+IS_BUILD_STAGE = os.environ.get('IS_BUILD_STAGE', 'False') == 'True'
+
+if DATABASE_URL and not IS_BUILD_STAGE:
     # Если DATABASE_URL содержит внутренний адрес Railway, заменяем на внешний
     if 'postgres.railway.internal' in DATABASE_URL:
         # Заменяем внутренний адрес на внешний
@@ -93,6 +96,7 @@ if DATABASE_URL:
 # Для отладки выводим информацию о базе данных
 if DEBUG:
     print(f"DATABASE_URL: {DATABASE_URL}")
+    print(f"IS_BUILD_STAGE: {IS_BUILD_STAGE}")
 
 DATABASES = {
     'default': dj_database_url.config(
