@@ -90,6 +90,10 @@ if DATABASE_URL:
     if not DATABASE_URL.startswith('postgresql://'):
         DATABASE_URL = None
 
+# Для отладки выводим информацию о базе данных
+if DEBUG:
+    print(f"DATABASE_URL: {DATABASE_URL}")
+
 DATABASES = {
     'default': dj_database_url.config(
         default=DATABASE_URL or 'sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
