@@ -15,6 +15,13 @@ python manage.py migrate --verbosity=2
 # Проверяем результат миграций
 echo "=== Migration result: $? ==="
 
+# Создаем суперпользователя если переменные окружения установлены
+if [ ! -z "$DJANGO_SUPERUSER_USERNAME" ] && [ ! -z "$DJANGO_SUPERUSER_EMAIL" ] && [ ! -z "$DJANGO_SUPERUSER_PASSWORD" ]; then
+    echo "=== Creating superuser ==="
+    python manage.py createsuperuser --noinput --username $DJANGO_SUPERUSER_USERNAME --email $DJANGO_SUPERUSER_EMAIL
+    echo "Superuser created successfully"
+fi
+
 # Запускаем сервер
 echo "=== Starting server ==="
 gunicorn config.wsgi 
