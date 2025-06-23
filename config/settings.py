@@ -77,9 +77,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# Получаем DATABASE_URL из переменных окружения
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # Если DATABASE_URL содержит внутренний адрес Railway, заменяем на внешний
+    if 'postgres.railway.internal' in DATABASE_URL:
+        # Заменяем внутренний адрес на внешний
+        DATABASE_URL = DATABASE_URL.replace('postgres.railway.internal:5432', 'shinkansen.proxy.rlwy.net:19416')
+    
+    # Также проверяем, что URL корректный
+    if not DATABASE_URL.startswith('postgresql://'):
+        DATABASE_URL = None
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'sqlite:///' + str(BASE_DIR / 'db.sqlite3')),
+        default=DATABASE_URL or 'sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
         conn_max_age=600,
         conn_health_checks=True,
     )
