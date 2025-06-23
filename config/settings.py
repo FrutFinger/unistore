@@ -90,13 +90,31 @@ if DATABASE_URL:
 if DEBUG:
     print(f"DATABASE_URL: {DATABASE_URL}")
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=DATABASE_URL or 'sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# Настраиваем базу данных вручную, чтобы избежать проблем с dj_database_url
+if DATABASE_URL and DATABASE_URL.startswith('postgresql://'):
+    # Парсим URL вручную
+    import urllib.parse
+    parsed = urllib.parse.urlparse(DATABASE_URL)
+    
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': parsed.path[1:],  # убираем первый символ '/'
+            'USER': parsed.username,
+            'PASSWORD': parsed.password,
+            'HOST': parsed.hostname,
+            'PORT': parsed.port or '5432',
+            'CONN_MAX_AGE': 600,
+            'CONN_HEALTH_CHECKS': True,
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
