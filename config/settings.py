@@ -30,9 +30,8 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Добавляем доверенный источник для CSRF
-CSRF_TRUSTED_ORIGINS = ['https://' + host for host in ALLOWED_HOSTS if host != 'localhost' and host != '127.0.0.1']
-if 'web-production-edc89.up.railway.app' not in ALLOWED_HOSTS:
-    CSRF_TRUSTED_ORIGINS.append('https://web-production-edc89.up.railway.app')
+# Берутся все хосты из ALLOWED_HOSTS и для каждого создается https-версия
+CSRF_TRUSTED_ORIGINS = ['https://' + host for host in ALLOWED_HOSTS if host not in ['localhost', '127.0.0.1']]
 
 
 # Application definition
