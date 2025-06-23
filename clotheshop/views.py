@@ -40,6 +40,8 @@ def catalog(request):
     product_type = request.GET.get('type')
     price_from = request.GET.get('price_from')
     price_to = request.GET.get('price_to')
+    size_filter = request.GET.get('size')
+    sort_by = request.GET.get('sort', 'name')  # По умолчанию сортируем по имени
 
     if product_type:
         products = products.filter(product_type=product_type)
@@ -48,13 +50,40 @@ def catalog(request):
     if price_to:
         products = products.filter(price__lte=price_to)
     
+    # Фильтрация по размеру
+    if size_filter:
+        products = products.filter(sizes__size=size_filter, sizes__quantity__gt=0)
+    
+    # Сортировка
+    if sort_by == 'price_asc':
+        products = products.order_by('price')
+    elif sort_by == 'price_desc':
+        products = products.order_by('-price')
+    elif sort_by == 'name':
+        products = products.order_by('name')
+    elif sort_by == 'newest':
+        products = products.order_by('-id')
+    
     # Фильтруем товары, которые есть в наличии
     available_products = []
     for product in products:
         if not product.is_fully_out_of_stock():
             available_products.append(product)
 
-    return render(request, 'catalog.html', {'products': available_products})
+    # Получаем все доступные размеры для фильтра
+    available_sizes = ProductSize.objects.filter(quantity__gt=0).values_list('size', flat=True).distinct()
+
+    return render(request, 'catalog.html', {
+        'products': available_products,
+        'available_sizes': available_sizes,
+        'current_filters': {
+            'type': product_type,
+            'price_from': price_from,
+            'price_to': price_to,
+            'size': size_filter,
+            'sort': sort_by
+        }
+    })
 
 # Страница контактов и обратной связи
 def contact(request):
