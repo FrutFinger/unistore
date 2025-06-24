@@ -1,9 +1,5 @@
 from django.contrib import admin
-from django.contrib.auth.models import Group
-from .models import Product, Message, Order, ProductSize, OrderItem
-
-# Убираем ненужные разделы из админ-панели
-admin.site.unregister(Group)
+from .models import Product, Message, Order, Favorite, ProductSize, OrderItem
 
 class ProductSizeInline(admin.TabularInline):
     model = ProductSize
@@ -15,7 +11,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'product_type', 'get_stock_status', 'get_image_preview')
+    list_display = ('name', 'price', 'product_type', 'get_stock_status')
     list_filter = ('product_type',)
     search_fields = ('name',)
     inlines = [ProductSizeInline]
@@ -26,15 +22,15 @@ class ProductAdmin(admin.ModelAdmin):
         return f"В наличии: {total_stock}" if total_stock > 0 else "Нет в наличии"
     
     get_stock_status.short_description = 'Наличие'
-    
-    def get_image_preview(self, obj):
-        """Show image preview in admin list"""
-        if obj.image:
-            return f'<img src="{obj.image.url}" style="max-height: 50px; max-width: 50px;" />'
-        return "Нет изображения"
-    get_image_preview.short_description = 'Изображение'
-    get_image_preview.allow_tags = True
 
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',),
+        }
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ('product', 'session_id')
     class Media:
         css = {
             'all': ('admin/css/custom_admin.css',),
@@ -73,4 +69,4 @@ class MessageAdmin(admin.ModelAdmin):
     class Media:
         css = {
             'all': ('admin/css/custom_admin.css',),
-        }
+        } 
