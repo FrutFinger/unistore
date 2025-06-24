@@ -138,10 +138,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Настройки для сохранения файлов в продакшене
 if not DEBUG:
-    # В продакшене используем временную папку, которая сохраняется между перезапусками
-    MEDIA_ROOT = '/tmp/media'
+    # В продакшене используем папку в корне проекта, которая сохраняется между перезапусками
+    MEDIA_ROOT = BASE_DIR / 'media'
     # Создаем папку, если её нет
     os.makedirs(MEDIA_ROOT, exist_ok=True)
+    os.makedirs(MEDIA_ROOT / 'products', exist_ok=True)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators

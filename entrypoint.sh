@@ -6,8 +6,7 @@ echo "Files in current directory: $(ls -la)"
 
 # Создаем папку для медиа файлов
 echo "=== Creating media directory ==="
-mkdir -p /tmp/media
-mkdir -p /tmp/media/products
+mkdir -p media/products
 
 # Ждем немного, чтобы база данных была готова
 echo "Waiting for database to be ready..."

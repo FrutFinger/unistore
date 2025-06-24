@@ -384,23 +384,9 @@ section {
 }
 
 .cta-content {
-  max-width: 1200px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   position: relative;
-}
-
-.cta-img {
-  width: 250px;
-  margin-right: 6rem;
-  transform: rotate(-15deg);
-  transition: transform 0.3s ease;
-  filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.2));
-}
-
-.cta-img:hover {
-  transform: rotate(0deg);
 }
 
 .cta-text {
@@ -596,10 +582,6 @@ section {
   .cta-content {
     flex-direction: column;
     text-align: center;
-  }
-  
-  .cta-img {
-    margin: 0 0 4rem 0;
   }
   
   .cta-buttons {
