@@ -515,24 +515,37 @@ def update_cart_quantity(request):
                         cart[key]['quantity'] += 1
                     else:
                         # Недостаточно товара
-                        return JsonResponse({'success': False, 'error': 'Недостаточно товара на складе'}, status=400)
+                        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                            return JsonResponse({'success': False, 'error': 'Недостаточно товара на складе'}, status=400)
+                        # Для обычного запроса перенаправляем обратно в корзину
+                        return redirect('cart')
                 else:
                     # Для товаров без размеров
                     if hasattr(product, 'no_size_info') and cart[key]['quantity'] < product.no_size_info.quantity:
                         cart[key]['quantity'] += 1
                     else:
                         # Недостаточно товара
-                        return JsonResponse({'success': False, 'error': 'Недостаточно товара на складе'}, status=400)
+                        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                            return JsonResponse({'success': False, 'error': 'Недостаточно товара на складе'}, status=400)
+                        # Для обычного запроса перенаправляем обратно в корзину
+                        return redirect('cart')
                         
             except (Product.DoesNotExist, ProductSize.DoesNotExist):
-                return JsonResponse({'success': False, 'error': 'Товар не найден'}, status=404)
+                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    return JsonResponse({'success': False, 'error': 'Товар не найден'}, status=404)
+                return redirect('cart')
         elif action == 'decrease':
             cart[key]['quantity'] = max(1, cart[key]['quantity'] - 1)
         elif action == 'remove':
             del cart[key]
 
     request.session['cart'] = cart
-    return redirect('cart')
+    
+    # Проверяем, это AJAX запрос или обычный
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'success': True})
+    else:
+        return redirect('cart')
 
 def order_success(request, order_id):
     order = get_object_or_404(Order, id=order_id)

@@ -53,17 +53,6 @@
         </label>
     </div>
 
-    <div class="filter-group">
-        <label>Сортировка:
-            <select name="sort">
-                <option value="name" {% if current_filters.sort == 'name' %}selected{% endif %}>По названию</option>
-                <option value="price_asc" {% if current_filters.sort == 'price_asc' %}selected{% endif %}>По цене (возрастание)</option>
-                <option value="price_desc" {% if current_filters.sort == 'price_desc' %}selected{% endif %}>По цене (убывание)</option>
-                <option value="newest" {% if current_filters.sort == 'newest' %}selected{% endif %}>Сначала новые</option>
-            </select>
-        </label>
-    </div>
-
     <div class="filter-buttons">
         <button type="submit">🔍 Фильтровать</button>
         <a href="{% url 'catalog' %}" class="reset-button">
@@ -77,19 +66,19 @@
     <p>Найдено товаров: <strong>{{ products|length }}</strong></p>
     
     <!-- Активные фильтры -->
-    {% if current_filters.type or current_filters.size or current_filters.price_from or current_filters.price_to or current_filters.sort != 'name' %}
+    {% if current_filters.type or current_filters.size or current_filters.price_from or current_filters.price_to %}
     <div class="active-filters">
         <span>Активные фильтры:</span>
         {% if current_filters.type %}
             <span class="filter-tag">
                 Тип: {{ current_filters.type }}
-                <a href="?{% if current_filters.size %}size={{ current_filters.size }}{% endif %}{% if current_filters.price_from %}{% if current_filters.size %}&{% endif %}price_from={{ current_filters.price_from }}{% endif %}{% if current_filters.price_to %}{% if current_filters.size or current_filters.price_from %}&{% endif %}price_to={{ current_filters.price_to }}{% endif %}{% if current_filters.sort != 'name' %}{% if current_filters.size or current_filters.price_from or current_filters.price_to %}&{% endif %}sort={{ current_filters.sort }}{% endif %}" class="remove-filter">×</a>
+                <a href="?{% if current_filters.size %}size={{ current_filters.size }}{% endif %}{% if current_filters.price_from %}{% if current_filters.size %}&{% endif %}price_from={{ current_filters.price_from }}{% endif %}{% if current_filters.price_to %}{% if current_filters.size or current_filters.price_from %}&{% endif %}price_to={{ current_filters.price_to }}{% endif %}" class="remove-filter">×</a>
             </span>
         {% endif %}
         {% if current_filters.size %}
             <span class="filter-tag">
                 Размер: {{ current_filters.size }}
-                <a href="?{% if current_filters.type %}type={{ current_filters.type }}{% endif %}{% if current_filters.price_from %}{% if current_filters.type %}&{% endif %}price_from={{ current_filters.price_from }}{% endif %}{% if current_filters.price_to %}{% if current_filters.type or current_filters.price_from %}&{% endif %}price_to={{ current_filters.price_to }}{% endif %}{% if current_filters.sort != 'name' %}{% if current_filters.type or current_filters.price_from or current_filters.price_to %}&{% endif %}sort={{ current_filters.sort }}{% endif %}" class="remove-filter">×</a>
+                <a href="?{% if current_filters.type %}type={{ current_filters.type }}{% endif %}{% if current_filters.price_from %}{% if current_filters.type %}&{% endif %}price_from={{ current_filters.price_from }}{% endif %}{% if current_filters.price_to %}{% if current_filters.type or current_filters.price_from %}&{% endif %}price_to={{ current_filters.price_to }}{% endif %}" class="remove-filter">×</a>
             </span>
         {% endif %}
         {% if current_filters.price_from or current_filters.price_to %}
@@ -97,16 +86,7 @@
                 Цена: 
                 {% if current_filters.price_from %}{{ current_filters.price_from }}{% else %}0{% endif %} - 
                 {% if current_filters.price_to %}{{ current_filters.price_to }}{% else %}∞{% endif %} ₽
-                <a href="?{% if current_filters.type %}type={{ current_filters.type }}{% endif %}{% if current_filters.size %}{% if current_filters.type %}&{% endif %}size={{ current_filters.size }}{% endif %}{% if current_filters.sort != 'name' %}{% if current_filters.type or current_filters.size %}&{% endif %}sort={{ current_filters.sort }}{% endif %}" class="remove-filter">×</a>
-            </span>
-        {% endif %}
-        {% if current_filters.sort != 'name' %}
-            <span class="filter-tag">
-                {% if current_filters.sort == 'price_asc' %}Сортировка: По цене (возрастание)
-                {% elif current_filters.sort == 'price_desc' %}Сортировка: По цене (убывание)
-                {% elif current_filters.sort == 'newest' %}Сортировка: Сначала новые
-                {% else %}Сортировка: {{ current_filters.sort }}{% endif %}
-                <a href="?{% if current_filters.type %}type={{ current_filters.type }}{% endif %}{% if current_filters.size %}{% if current_filters.type %}&{% endif %}size={{ current_filters.size }}{% endif %}{% if current_filters.price_from %}{% if current_filters.type or current_filters.size %}&{% endif %}price_from={{ current_filters.price_from }}{% endif %}{% if current_filters.price_to %}{% if current_filters.type or current_filters.size or current_filters.price_from %}&{% endif %}price_to={{ current_filters.price_to }}{% endif %}" class="remove-filter">×</a>
+                <a href="?{% if current_filters.type %}type={{ current_filters.type }}{% endif %}{% if current_filters.size %}{% if current_filters.type %}&{% endif %}size={{ current_filters.size }}{% endif %}" class="remove-filter">×</a>
             </span>
         {% endif %}
     </div>

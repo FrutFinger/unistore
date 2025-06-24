@@ -9,6 +9,11 @@ class Command(BaseCommand):
     help = 'Load sample products with images'
 
     def handle(self, *args, **options):
+        # Проверяем, есть ли уже товары в базе
+        if Product.objects.exists():
+            self.stdout.write('Products already exist, skipping sample data loading.')
+            return
+            
         self.stdout.write('Loading sample products...')
         
         # Создаем тестовые продукты

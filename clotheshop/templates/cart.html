@@ -22,10 +22,10 @@
               {% csrf_token %}
               <input type="hidden" name="product_id" value="{{ item.product.id }}">
               <input type="hidden" name="size" value="{{ item.size }}">
-              <button name="action" value="decrease">−</button>
+              <button name="action" value="decrease" type="button">−</button>
               <span>{{ item.quantity }}</span>
-              <button name="action" value="increase">+</button>
-              <button name="action" value="remove" class="remove-btn">Удалить</button>
+              <button name="action" value="increase" type="button">+</button>
+              <button name="action" value="remove" class="remove-btn" type="button">Удалить</button>
             </form>
           </div>
         </div>
@@ -88,4 +88,48 @@
     </form>
   </div>
 </div>
+
+<script>
+// Обработка форм обновления количества товаров
+document.addEventListener('DOMContentLoaded', function() {
+    const quantityForms = document.querySelectorAll('.quantity-form');
+    
+    quantityForms.forEach(form => {
+        const buttons = form.querySelectorAll('button[type="button"]');
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                formData.append('action', this.value);
+                
+                try {
+                    const response = await fetch('{% url "update_cart_quantity" %}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok && data.success) {
+                        // Обновляем страницу для отображения изменений
+                        window.location.reload();
+                    } else {
+                        // Показываем ошибку
+                        alert(data.error || 'Произошла ошибка при обновлении корзины');
+                    }
+                } catch (error) {
+                    console.error('Error updating cart:', error);
+                    alert('Произошла ошибка при обновлении корзины');
+                }
+            });
+        });
+    });
+});
+</script>
 {% endblock %}
